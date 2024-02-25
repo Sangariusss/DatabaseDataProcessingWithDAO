@@ -19,10 +19,10 @@ public class DatabaseService {
     private final VisitorDAO visitorDAO;
 
     public DatabaseService() {
-        this.animalDAO = new AnimalDAO();
-        this.employeeDAO = new EmployeeDAO();
-        this.enclosureDAO = new EnclosureDAO();
-        this.visitorDAO = new VisitorDAO();
+        this.animalDAO = AnimalDAO.getInstance();
+        this.employeeDAO = EmployeeDAO.getInstance();
+        this.enclosureDAO = EnclosureDAO.getInstance();
+        this.visitorDAO = VisitorDAO.getInstance();
     }
 
     // Animal CRUD operations

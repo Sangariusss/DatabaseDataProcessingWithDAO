@@ -16,7 +16,7 @@ public class VisitorDAOTest {
     @Before
     public void setUp() {
         // Initialize the VisitorDAO object before each test
-        visitorDAO = new VisitorDAO();
+        visitorDAO = VisitorDAO.getInstance();
     }
 
     @Test

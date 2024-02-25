@@ -12,6 +12,18 @@ import main.java.com.sangarius.dataprocessingwithdao.model.Animal;
 
 public class AnimalDAO {
 
+    // Private static instance of AnimalDAO
+    private static final AnimalDAO instance = new AnimalDAO();
+
+    // Private constructor to prevent instantiation from outside
+    private AnimalDAO() {
+    }
+
+    // Static method to get the instance of AnimalDAO
+    public static AnimalDAO getInstance() {
+        return instance;
+    }
+
     // Establish connection with the SQLite database
     private Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";

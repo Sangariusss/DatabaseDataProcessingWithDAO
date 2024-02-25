@@ -12,6 +12,17 @@ import main.java.com.sangarius.dataprocessingwithdao.model.Enclosure;
 
 public class EnclosureDAO {
 
+    // Private static instance of EnclosureDAO
+    private static final EnclosureDAO instance = new EnclosureDAO();
+
+    // Private constructor to prevent instantiation outside of this class
+    private EnclosureDAO() {}
+
+    // Method to get the singleton instance of EnclosureDAO
+    public static EnclosureDAO getInstance() {
+        return instance;
+    }
+
     // Establish connection with the SQLite database
     private Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";

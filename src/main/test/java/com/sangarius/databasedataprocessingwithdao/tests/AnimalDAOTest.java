@@ -18,7 +18,7 @@ public class AnimalDAOTest {
     @Before
     public void setUp() {
         // Initialize the AnimalDAO object before each test
-        animalDAO = new AnimalDAO();
+        animalDAO = AnimalDAO.getInstance();
     }
 
     @Test

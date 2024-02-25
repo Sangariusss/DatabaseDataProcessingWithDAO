@@ -18,7 +18,7 @@ public class EnclosureDAOTest {
 
     @Before
     public void setUp() {
-        enclosureDAO = new EnclosureDAO();
+        enclosureDAO = EnclosureDAO.getInstance();
     }
 
     @Test

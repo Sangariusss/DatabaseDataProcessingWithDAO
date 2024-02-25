@@ -12,6 +12,17 @@ import main.java.com.sangarius.dataprocessingwithdao.model.Visitor;
 
 public class VisitorDAO {
 
+    // Private static instance of VisitorDAO
+    private static final VisitorDAO instance = new VisitorDAO();
+
+    // Private constructor to prevent instantiation outside of this class
+    private VisitorDAO() {}
+
+    // Method to get the singleton instance of VisitorDAO
+    public static VisitorDAO getInstance() {
+        return instance;
+    }
+
     // Establish connection with the SQLite database
     private Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";

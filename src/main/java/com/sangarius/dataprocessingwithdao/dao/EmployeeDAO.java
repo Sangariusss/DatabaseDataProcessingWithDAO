@@ -12,6 +12,17 @@ import main.java.com.sangarius.dataprocessingwithdao.model.Employee;
 
 public class EmployeeDAO {
 
+    // Private static instance of EmployeeDAO
+    private static final EmployeeDAO instance = new EmployeeDAO();
+
+    // Private constructor to prevent instantiation outside of this class
+    private EmployeeDAO() {}
+
+    // Method to get the singleton instance of EmployeeDAO
+    public static EmployeeDAO getInstance() {
+        return instance;
+    }
+
     // Establish connection with the SQLite database
     private Connection connect() {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";

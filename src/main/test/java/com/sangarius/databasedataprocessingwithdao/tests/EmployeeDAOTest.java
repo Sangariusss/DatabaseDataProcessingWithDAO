@@ -16,7 +16,7 @@ public class EmployeeDAOTest {
 
     @Before
     public void setUp() {
-        employeeDAO = new EmployeeDAO();
+       employeeDAO = EmployeeDAO.getInstance();
     }
 
     @After
