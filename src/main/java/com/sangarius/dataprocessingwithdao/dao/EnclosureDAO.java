@@ -1,5 +1,9 @@
 package main.java.com.sangarius.dataprocessingwithdao.dao;
 
+import main.java.com.sangarius.dataprocessingwithdao.model.Enclosure;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.DatabaseConnectionException;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.RecordNotFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import main.java.com.sangarius.dataprocessingwithdao.model.Enclosure;
 
 public class EnclosureDAO {
 
@@ -24,19 +27,19 @@ public class EnclosureDAO {
     }
 
     // Establish connection with the SQLite database
-    private Connection connect() {
+    private Connection connect() throws DatabaseConnectionException {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to connect to the database: " + e.getMessage(), e);
         }
         return conn;
     }
 
     // Add a new enclosure to the database
-    public void addEnclosure(Enclosure enclosure) {
+    public void addEnclosure(Enclosure enclosure) throws DatabaseConnectionException {
         String sql = "INSERT INTO Enclosure(id, name, type, capacity) VALUES(?,?,?,?)";
 
         try (Connection conn = this.connect();
@@ -47,12 +50,12 @@ public class EnclosureDAO {
             pstmt.setInt(4, enclosure.getCapacity());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to add enclosure to the database: " + e.getMessage(), e);
         }
     }
 
     // Retrieve a list of all enclosures from the database
-    public List<Enclosure> getAllEnclosures() {
+    public List<Enclosure> getAllEnclosures() throws DatabaseConnectionException {
         String sql = "SELECT * FROM Enclosure";
         List<Enclosure> enclosures = new ArrayList<>();
 
@@ -70,13 +73,13 @@ public class EnclosureDAO {
                 enclosures.add(enclosure);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve enclosures from the database: " + e.getMessage(), e);
         }
         return enclosures;
     }
 
     // Retrieve an enclosure by its UUID from the database
-    public Enclosure getEnclosureById(UUID id) {
+    public Enclosure getEnclosureById(UUID id) throws DatabaseConnectionException, RecordNotFoundException {
         String sql = "SELECT * FROM Enclosure WHERE id = ?";
         Enclosure enclosure = null;
 
@@ -96,30 +99,32 @@ public class EnclosureDAO {
                     .type(type)
                     .capacity(capacity)
                     .build();
+            } else {
+                throw new RecordNotFoundException("Enclosure with id " + id + " not found");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve enclosure from the database: " + e.getMessage(), e);
         }
         return enclosure;
     }
 
     // Update an existing enclosure in the database
-    public void updateEnclosure(Enclosure enclosure) {
+    public void updateEnclosure(Enclosure enclosure) throws DatabaseConnectionException {
         String sql = "UPDATE Enclosure SET name = ?, capacity = ? WHERE id = ?";
 
         try (Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, enclosure.getName());
-            pstmt.setDouble(2, enclosure.getCapacity());
+            pstmt.setInt(2, enclosure.getCapacity());
             pstmt.setString(3, enclosure.getId().toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to update enclosure in the database: " + e.getMessage(), e);
         }
     }
 
     // Delete an enclosure from the database by its UUID
-    public void deleteEnclosure(UUID id) {
+    public void deleteEnclosure(UUID id) throws DatabaseConnectionException {
         String sql = "DELETE FROM Enclosure WHERE id = ?";
 
         try (Connection conn = this.connect();
@@ -127,7 +132,7 @@ public class EnclosureDAO {
             pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to delete enclosure from the database: " + e.getMessage(), e);
         }
     }
 }

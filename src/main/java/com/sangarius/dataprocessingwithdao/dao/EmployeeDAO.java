@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.DatabaseConnectionException;
 import main.java.com.sangarius.dataprocessingwithdao.model.Employee;
 
 public class EmployeeDAO {
@@ -24,19 +25,19 @@ public class EmployeeDAO {
     }
 
     // Establish connection with the SQLite database
-    private Connection connect() {
+    private Connection connect() throws DatabaseConnectionException {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to connect to the database: " + e.getMessage(), e);
         }
         return conn;
     }
 
     // Add a new employee to the database
-    public void addEmployee(Employee employee) {
+    public void addEmployee(Employee employee) throws DatabaseConnectionException {
         String sql = "INSERT INTO Employee(id, name, position, salary) VALUES(?,?,?,?)";
 
         try (Connection conn = this.connect();
@@ -47,12 +48,12 @@ public class EmployeeDAO {
             pstmt.setDouble(4, employee.getSalary());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to add employee to the database: " + e.getMessage(), e);
         }
     }
 
     // Retrieve a list of all employees from the database
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() throws DatabaseConnectionException {
         String sql = "SELECT * FROM Employee";
         List<Employee> employees = new ArrayList<>();
 
@@ -70,13 +71,13 @@ public class EmployeeDAO {
                 employees.add(employee);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve all employees from the database: " + e.getMessage(), e);
         }
         return employees;
     }
 
     // Retrieve an employee by its UUID from the database
-    public Employee getEmployeeById(UUID id) {
+    public Employee getEmployeeById(UUID id) throws DatabaseConnectionException {
         String sql = "SELECT * FROM Employee WHERE id = ?";
         Employee employee = null;
 
@@ -96,15 +97,17 @@ public class EmployeeDAO {
                     .position(position)
                     .salary(salary)
                     .build();
+            } else {
+                throw new DatabaseConnectionException("Employee with id " + id + " not found in the database");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve employee by id from the database: " + e.getMessage(), e);
         }
         return employee;
     }
 
     // Update an existing employee in the database
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws DatabaseConnectionException {
         String sql = "UPDATE Employee SET name = ?, position = ?, salary = ? WHERE id = ?";
 
         try (Connection conn = this.connect();
@@ -115,12 +118,12 @@ public class EmployeeDAO {
             pstmt.setString(4, employee.getId().toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to update employee in the database: " + e.getMessage(), e);
         }
     }
 
     // Delete an employee from the database by its UUID
-    public void deleteEmployee(UUID id) {
+    public void deleteEmployee(UUID id) throws DatabaseConnectionException {
         String sql = "DELETE FROM Employee WHERE id = ?";
 
         try (Connection conn = this.connect();
@@ -128,7 +131,7 @@ public class EmployeeDAO {
             pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to delete employee from the database: " + e.getMessage(), e);
         }
     }
 }

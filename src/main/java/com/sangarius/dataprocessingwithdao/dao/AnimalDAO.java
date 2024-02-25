@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.DatabaseConnectionException;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.RecordNotFoundException;
 import main.java.com.sangarius.dataprocessingwithdao.model.Animal;
 
 public class AnimalDAO {
@@ -31,7 +33,7 @@ public class AnimalDAO {
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to connect to the database: " + e.getMessage(), e);
         }
         return conn;
     }
@@ -49,7 +51,7 @@ public class AnimalDAO {
             pstmt.setInt(5, animal.getEnclosureId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to add animal: " + e.getMessage(), e);
         }
     }
 
@@ -73,7 +75,7 @@ public class AnimalDAO {
                 animals.add(animal);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve animals: " + e.getMessage(), e);
         }
         return animals;
     }
@@ -101,9 +103,11 @@ public class AnimalDAO {
                     .age(age)
                     .enclosureId(enclosureId)
                     .build();
+            } else {
+                throw new RecordNotFoundException("Animal with id " + id + " not found");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve animal with id " + id + ": " + e.getMessage(), e);
         }
         return animal;
     }
@@ -122,13 +126,13 @@ public class AnimalDAO {
                     pstmt.setString(5, animal.getId().toString());
                     pstmt.executeUpdate();
                 } catch (SQLException e) {
-                    System.out.println(e.getMessage());
+                    throw new RecordNotFoundException("Failed to update animal with id " + animal.getId());
                 }
             } else {
-                System.out.println("Connection to the database is null.");
+                throw new DatabaseConnectionException("Failed to connect to the database");
             }
         } catch (SQLException e) {
-            System.out.println("Failed to connect to the database: " + e.getMessage());
+            throw new DatabaseConnectionException("Failed to connect to the database: " + e.getMessage(), e);
         }
     }
 
@@ -141,7 +145,7 @@ public class AnimalDAO {
             pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RecordNotFoundException("Failed to delete animal with id " + id);
         }
     }
 }

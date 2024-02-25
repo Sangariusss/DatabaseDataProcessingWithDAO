@@ -1,5 +1,9 @@
 package main.java.com.sangarius.dataprocessingwithdao.dao;
 
+import main.java.com.sangarius.dataprocessingwithdao.model.Visitor;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.DatabaseConnectionException;
+import main.java.com.sangarius.dataprocessingwithdao.dao.exceptions.RecordNotFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import main.java.com.sangarius.dataprocessingwithdao.model.Visitor;
 
 public class VisitorDAO {
 
@@ -24,19 +27,19 @@ public class VisitorDAO {
     }
 
     // Establish connection with the SQLite database
-    private Connection connect() {
+    private Connection connect() throws DatabaseConnectionException {
         String url = "jdbc:sqlite:src/main/resources/db/zoo_database";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to connect to the database: " + e.getMessage(), e);
         }
         return conn;
     }
 
     // Add a new visitor to the database
-    public void addVisitor(Visitor visitor) {
+    public void addVisitor(Visitor visitor) throws DatabaseConnectionException {
         String sql = "INSERT INTO Visitor(id, name, age) VALUES(?,?,?)";
 
         try (Connection conn = this.connect();
@@ -46,12 +49,12 @@ public class VisitorDAO {
             pstmt.setInt(3, visitor.getAge());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to add visitor to the database: " + e.getMessage(), e);
         }
     }
 
     // Retrieve a list of all visitors from the database
-    public List<Visitor> getAllVisitors() {
+    public List<Visitor> getAllVisitors() throws DatabaseConnectionException {
         String sql = "SELECT * FROM Visitor";
         List<Visitor> visitors = new ArrayList<>();
 
@@ -68,13 +71,13 @@ public class VisitorDAO {
                 visitors.add(visitor);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve visitors from the database: " + e.getMessage(), e);
         }
         return visitors;
     }
 
     // Retrieve a visitor by their identifier
-    public Visitor getVisitorById(UUID id) {
+    public Visitor getVisitorById(UUID id) throws DatabaseConnectionException, RecordNotFoundException {
         String sql = "SELECT * FROM Visitor WHERE id = ?";
         Visitor visitor = null;
 
@@ -92,15 +95,17 @@ public class VisitorDAO {
                     .name(name)
                     .age(age)
                     .build();
+            } else {
+                throw new RecordNotFoundException("Visitor with id " + id + " not found");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to retrieve visitor from the database: " + e.getMessage(), e);
         }
         return visitor;
     }
 
     // Update a visitor
-    public void updateVisitor(Visitor visitor) {
+    public void updateVisitor(Visitor visitor) throws DatabaseConnectionException {
         String sql = "UPDATE Visitor SET name = ?, age = ? WHERE id = ?";
 
         try (Connection conn = this.connect();
@@ -110,12 +115,12 @@ public class VisitorDAO {
             pstmt.setString(3, visitor.getId().toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to update visitor in the database: " + e.getMessage(), e);
         }
     }
 
     // Delete a visitor
-    public void deleteVisitor(UUID id) {
+    public void deleteVisitor(UUID id) throws DatabaseConnectionException {
         String sql = "DELETE FROM Visitor WHERE id = ?";
 
         try (Connection conn = this.connect();
@@ -123,7 +128,7 @@ public class VisitorDAO {
             pstmt.setString(1, id.toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseConnectionException("Failed to delete visitor from the database: " + e.getMessage(), e);
         }
     }
 }
