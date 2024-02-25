@@ -8,11 +8,11 @@ public class Visitor {
     private String name;
     private int age;
 
-    // Constructor with parameters
-    public Visitor(UUID id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
+    // Private constructor to enforce the use of the builder
+    private Visitor(VisitorBuilder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.age = builder.age;
     }
 
     // Default constructor
@@ -43,5 +43,36 @@ public class Visitor {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    // Builder class
+    public static VisitorBuilder builder() {
+        return new VisitorBuilder();
+    }
+
+    public static class VisitorBuilder {
+
+        private UUID id;
+        private String name;
+        private int age;
+
+        public VisitorBuilder id(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public VisitorBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public VisitorBuilder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public Visitor build() {
+            return new Visitor(this);
+        }
     }
 }

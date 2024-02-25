@@ -25,7 +25,11 @@ public class VisitorDAOTest {
         UUID id = UUID.randomUUID();
         String name = "Test Visitor";
         int age = 25;
-        Visitor testVisitor = new Visitor(id, name, age);
+        Visitor testVisitor = Visitor.builder()
+            .id(id)
+            .name(name)
+            .age(age)
+            .build();
 
         // Add the test visitor to the database
         visitorDAO.addVisitor(testVisitor);
@@ -53,7 +57,11 @@ public class VisitorDAOTest {
         UUID id = UUID.randomUUID();
         String name = "Test Visitor";
         int age = 25;
-        Visitor testVisitor = new Visitor(id, name, age);
+        Visitor testVisitor = Visitor.builder()
+            .id(id)
+            .name(name)
+            .age(age)
+            .build();
 
         // Add the visitor to the database
         visitorDAO.addVisitor(testVisitor);
@@ -71,7 +79,11 @@ public class VisitorDAOTest {
         UUID id = UUID.randomUUID();
         String name = "Test Visitor";
         int age = 25;
-        Visitor testVisitor = new Visitor(id, name, age);
+        Visitor testVisitor = Visitor.builder()
+            .id(id)
+            .name(name)
+            .age(age)
+            .build();
 
         // Add the visitor to the database
         visitorDAO.addVisitor(testVisitor);
@@ -94,7 +106,11 @@ public class VisitorDAOTest {
         UUID id = UUID.randomUUID();
         String name = "Test Visitor";
         int age = 25;
-        Visitor testVisitor = new Visitor(id, name, age);
+        Visitor testVisitor = Visitor.builder()
+            .id(id)
+            .name(name)
+            .age(age)
+            .build();
 
         // Add the visitor to the database
         visitorDAO.addVisitor(testVisitor);

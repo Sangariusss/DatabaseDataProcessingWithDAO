@@ -27,7 +27,13 @@ public class DatabaseService {
 
     // Animal CRUD operations
     public void addAnimal(UUID id, String name, String species, int age, int enclosureId) {
-        Animal animal = new Animal(id, name, species, age, enclosureId);
+        Animal animal = Animal.builder()
+            .id(id)
+            .name(name)
+            .species(species)
+            .age(age)
+            .enclosureId(enclosureId)
+            .build();
         animalDAO.addAnimal(animal);
     }
 
@@ -40,7 +46,13 @@ public class DatabaseService {
     }
 
     public void updateAnimal(UUID id, String name, String species, int age, int enclosureId) {
-        Animal animal = new Animal(id, name, species, age, enclosureId);
+        Animal animal = Animal.builder()
+            .id(id)
+            .name(name)
+            .species(species)
+            .age(age)
+            .enclosureId(enclosureId)
+            .build();
         animalDAO.updateAnimal(animal);
     }
 
@@ -50,7 +62,13 @@ public class DatabaseService {
 
     // Employee CRUD operations
     public void addEmployee(UUID id, String name, String position, double salary) {
-        Employee employee = new Employee(id, name, position, salary);
+        Employee employee = Employee.builder()
+            .id(id)
+            .name(name)
+            .position(position)
+            .salary(salary)
+            .build();
+
         employeeDAO.addEmployee(employee);
     }
 
@@ -63,7 +81,13 @@ public class DatabaseService {
     }
 
     public void updateEmployee(UUID id, String name, String position, double salary) {
-        Employee employee = new Employee(id, name, position, salary);
+        Employee employee = Employee.builder()
+            .id(id)
+            .name(name)
+            .position(position)
+            .salary(salary)
+            .build();
+
         employeeDAO.updateEmployee(employee);
     }
 
@@ -73,7 +97,13 @@ public class DatabaseService {
 
     // Enclosure CRUD operations
     public void addEnclosure(UUID id, String name, String type, int capacity) {
-        Enclosure enclosure = new Enclosure(id, name, type, capacity);
+        Enclosure enclosure = Enclosure.builder()
+            .id(id)
+            .name(name)
+            .type(type)
+            .capacity(capacity)
+            .build();
+
         enclosureDAO.addEnclosure(enclosure);
     }
 
@@ -86,7 +116,13 @@ public class DatabaseService {
     }
 
     public void updateEnclosure(UUID id, String name, String type, int capacity) {
-        Enclosure enclosure = new Enclosure(id, name, type, capacity);
+        Enclosure enclosure = Enclosure.builder()
+            .id(id)
+            .name(name)
+            .type(type)
+            .capacity(capacity)
+            .build();
+
         enclosureDAO.updateEnclosure(enclosure);
     }
 
@@ -96,7 +132,12 @@ public class DatabaseService {
 
     // Visitor CRUD operations
     public void addVisitor(UUID id, String name, int age) {
-        Visitor visitor = new Visitor(id, name, age);
+        Visitor visitor = Visitor.builder()
+            .id(id)
+            .name(name)
+            .age(age)
+            .build();
+
         visitorDAO.addVisitor(visitor);
     }
 
@@ -109,7 +150,12 @@ public class DatabaseService {
     }
 
     public void updateVisitor(UUID id, String name, int age) {
-        Visitor visitor = new Visitor(id, name, age);
+        Visitor visitor = Visitor.builder()
+            .id(id)
+            .name(name)
+            .age(age)
+            .build();
+
         visitorDAO.updateVisitor(visitor);
     }
 

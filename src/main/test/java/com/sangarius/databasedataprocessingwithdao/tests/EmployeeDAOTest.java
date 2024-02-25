@@ -28,7 +28,13 @@ public class EmployeeDAOTest {
     public void testAddEmployee() {
         // Test adding an employee to the database
         UUID id = UUID.randomUUID(); // Generate a random UUID for the employee
-        Employee employee = new Employee(id, "John Doe", "Manager", 50000.0);
+        Employee employee = Employee.builder()
+            .id(id)
+            .name("John Doe")
+            .position("Manager")
+            .salary(50000.0)
+            .build();
+
         employeeDAO.addEmployee(employee);
 
         Employee retrievedEmployee = employeeDAO.getEmployeeById(id);
@@ -53,7 +59,12 @@ public class EmployeeDAOTest {
         String name = "Test Employee";
         String position = "Test Position";
         double salary = 1000.0;
-        Employee testEmployee = new Employee(id, name, position, salary);
+        Employee testEmployee = Employee.builder()
+            .id(id)
+            .name(name)
+            .position(position)
+            .salary(salary)
+            .build();
 
         // Add the employee to the database
         employeeDAO.addEmployee(testEmployee);
@@ -72,7 +83,12 @@ public class EmployeeDAOTest {
         String initialName = "Initial Name";
         String position = "Position";
         double salary = 50000.0;
-        Employee testEmployee = new Employee(id, initialName, position, salary);
+        Employee testEmployee = Employee.builder()
+            .id(id)
+            .name(initialName)
+            .position(position)
+            .salary(salary)
+            .build();
 
         // Add the test employee to the database
         employeeDAO.addEmployee(testEmployee);
@@ -99,7 +115,12 @@ public class EmployeeDAOTest {
         String name = "Test Employee";
         String position = "Test Position";
         double salary = 1000.0; // Just an example value
-        Employee testEmployee = new Employee(id, name, position, salary);
+        Employee testEmployee = Employee.builder()
+            .id(id)
+            .name(name)
+            .position(position)
+            .salary(salary)
+            .build();
 
         // Add the employee to the database
         employeeDAO.addEmployee(testEmployee);

@@ -79,7 +79,12 @@ public class EmployeeDAO {
                 String position = rs.getString("position");
                 double salary = rs.getDouble("salary");
 
-                employee = new Employee(id, name, position, salary);
+                employee = Employee.builder()
+                    .id(id)
+                    .name(name)
+                    .position(position)
+                    .salary(salary)
+                    .build();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

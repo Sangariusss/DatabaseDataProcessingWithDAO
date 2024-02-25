@@ -82,7 +82,13 @@ public class AnimalDAO {
                 int age = rs.getInt("age");
                 int enclosureId = rs.getInt("enclosure_id");
 
-                animal = new Animal(id, name, species, age, enclosureId);
+                animal = Animal.builder()
+                    .id(id)
+                    .name(name)
+                    .species(species)
+                    .age(age)
+                    .enclosureId(enclosureId)
+                    .build();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

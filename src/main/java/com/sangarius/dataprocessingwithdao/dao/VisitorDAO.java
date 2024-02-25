@@ -76,7 +76,11 @@ public class VisitorDAO {
                 String name = rs.getString("name");
                 int age = rs.getInt("age");
 
-                visitor = new Visitor(id, name, age);
+                visitor = Visitor.builder()
+                    .id(id)
+                    .name(name)
+                    .age(age)
+                    .build();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

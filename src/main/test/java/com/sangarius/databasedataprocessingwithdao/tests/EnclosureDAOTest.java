@@ -28,7 +28,12 @@ public class EnclosureDAOTest {
         String name = "Test Enclosure";
         String type = "Test Type";
         int capacity = 10;
-        Enclosure testEnclosure = new Enclosure(id, name, type, capacity);
+        Enclosure testEnclosure = Enclosure.builder()
+            .id(id)
+            .name(name)
+            .type(type)
+            .capacity(capacity)
+            .build();
 
         // Add the test enclosure to the database
         enclosureDAO.addEnclosure(testEnclosure);
@@ -59,7 +64,12 @@ public class EnclosureDAOTest {
         String name = "Test Enclosure";
         String type = "Test Type";
         int capacity = 10;
-        Enclosure testEnclosure = new Enclosure(id, name, type, capacity);
+        Enclosure testEnclosure = Enclosure.builder()
+            .id(id)
+            .name(name)
+            .type(type)
+            .capacity(capacity)
+            .build();
 
         // Add the test enclosure to the database
         enclosureDAO.addEnclosure(testEnclosure);
@@ -81,7 +91,12 @@ public class EnclosureDAOTest {
         String name = "Test Enclosure";
         String type = "Test Type";
         int capacity = 10;
-        Enclosure testEnclosure = new Enclosure(id, name, type, capacity);
+        Enclosure testEnclosure = Enclosure.builder()
+            .id(id)
+            .name(name)
+            .type(type)
+            .capacity(capacity)
+            .build();
 
         // Add the test enclosure to the database
         enclosureDAO.addEnclosure(testEnclosure);
@@ -106,7 +121,12 @@ public class EnclosureDAOTest {
         String name = "Test Enclosure";
         String type = "Test Type";
         int capacity = 10;
-        Enclosure testEnclosure = new Enclosure(id, name, type, capacity);
+        Enclosure testEnclosure = Enclosure.builder()
+            .id(id)
+            .name(name)
+            .type(type)
+            .capacity(capacity)
+            .build();
 
         // Add the test enclosure to the database
         enclosureDAO.addEnclosure(testEnclosure);

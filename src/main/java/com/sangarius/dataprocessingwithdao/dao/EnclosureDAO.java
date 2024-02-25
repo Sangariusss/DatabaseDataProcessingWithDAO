@@ -79,7 +79,12 @@ public class EnclosureDAO {
                 int capacity = rs.getInt("capacity");
                 String type = rs.getString("type");
 
-                enclosure = new Enclosure(id, name, type, capacity);
+                enclosure = Enclosure.builder()
+                    .id(id)
+                    .name(name)
+                    .type(type)
+                    .capacity(capacity)
+                    .build();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

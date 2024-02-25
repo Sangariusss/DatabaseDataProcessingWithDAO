@@ -29,7 +29,13 @@ public class AnimalDAOTest {
         String species = "Test Species";
         int age = 5;
         int enclosureId = 1;
-        Animal testAnimal = new Animal(id, name, species, age, enclosureId);
+        Animal testAnimal = Animal.builder()
+            .id(id)
+            .name(name)
+            .species(species)
+            .age(age)
+            .enclosureId(enclosureId)
+            .build();
 
         // Add the animal to the database
         animalDAO.addAnimal(testAnimal);
@@ -56,7 +62,13 @@ public class AnimalDAOTest {
         String species = "Test Species";
         int age = 5;
         int enclosureId = 1;
-        Animal testAnimal = new Animal(id, name, species, age, enclosureId);
+        Animal testAnimal = Animal.builder()
+            .id(id)
+            .name(name)
+            .species(species)
+            .age(age)
+            .enclosureId(enclosureId)
+            .build();
 
         // Add the animal to the database
         animalDAO.addAnimal(testAnimal);
@@ -76,7 +88,13 @@ public class AnimalDAOTest {
         String species = "Test Species";
         int age = 5;
         int enclosureId = 1;
-        Animal testAnimal = new Animal(id, name, species, age, enclosureId);
+        Animal testAnimal = Animal.builder()
+            .id(id)
+            .name(name)
+            .species(species)
+            .age(age)
+            .enclosureId(enclosureId)
+            .build();
 
         // Add the animal to the database
         animalDAO.addAnimal(testAnimal);
@@ -101,7 +119,13 @@ public class AnimalDAOTest {
         String species = "Test Species";
         int age = 5;
         int enclosureId = 1;
-        Animal testAnimal = new Animal(id, name, species, age, enclosureId);
+        Animal testAnimal = Animal.builder()
+            .id(id)
+            .name(name)
+            .species(species)
+            .age(age)
+            .enclosureId(enclosureId)
+            .build();
 
         // Add the animal to the database
         animalDAO.addAnimal(testAnimal);

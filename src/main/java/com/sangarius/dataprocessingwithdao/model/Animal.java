@@ -11,13 +11,13 @@ public class Animal {
     private int age;
     private int enclosureId;
 
-    // Constructor with parameters
-    public Animal(UUID id, String name, String species, int age, int enclosureId) {
-        this.id = id;
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        this.enclosureId = enclosureId;
+    // Private constructor to enforce the use of the builder
+    private Animal(AnimalBuilder animalBuilder) {
+        this.id = animalBuilder.id;
+        this.name = animalBuilder.name;
+        this.species = animalBuilder.species;
+        this.age = animalBuilder.age;
+        this.enclosureId = animalBuilder.enclosureId;
     }
 
     // Default constructor
@@ -81,5 +81,51 @@ public class Animal {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, species, age, enclosureId);
+    }
+
+    // Builder class
+    public static AnimalBuilder builder() {
+        return new AnimalBuilder();
+    }
+
+    public static class AnimalBuilder {
+        private UUID id;
+        private String name;
+        private String species;
+        private int age;
+        private int enclosureId;
+
+        public AnimalBuilder() {
+            this.id = UUID.randomUUID();
+        }
+
+        public AnimalBuilder id(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public AnimalBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public AnimalBuilder species(String species) {
+            this.species = species;
+            return this;
+        }
+
+        public AnimalBuilder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public AnimalBuilder enclosureId(int enclosureId) {
+            this.enclosureId = enclosureId;
+            return this;
+        }
+
+        public Animal build() {
+            return new Animal(this);
+        }
     }
 }
