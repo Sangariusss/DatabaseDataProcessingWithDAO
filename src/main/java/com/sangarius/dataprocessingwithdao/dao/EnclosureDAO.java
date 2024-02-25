@@ -99,8 +99,6 @@ public class EnclosureDAO {
                     .type(type)
                     .capacity(capacity)
                     .build();
-            } else {
-                throw new RecordNotFoundException("Enclosure with id " + id + " not found");
             }
         } catch (SQLException e) {
             throw new DatabaseConnectionException("Failed to retrieve enclosure from the database: " + e.getMessage(), e);

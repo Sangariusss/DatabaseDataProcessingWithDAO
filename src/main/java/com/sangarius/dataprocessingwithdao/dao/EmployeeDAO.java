@@ -97,8 +97,6 @@ public class EmployeeDAO {
                     .position(position)
                     .salary(salary)
                     .build();
-            } else {
-                throw new DatabaseConnectionException("Employee with id " + id + " not found in the database");
             }
         } catch (SQLException e) {
             throw new DatabaseConnectionException("Failed to retrieve employee by id from the database: " + e.getMessage(), e);

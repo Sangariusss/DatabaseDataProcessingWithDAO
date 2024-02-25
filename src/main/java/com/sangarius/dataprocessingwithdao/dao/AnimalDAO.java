@@ -103,8 +103,6 @@ public class AnimalDAO {
                     .age(age)
                     .enclosureId(enclosureId)
                     .build();
-            } else {
-                throw new RecordNotFoundException("Animal with id " + id + " not found");
             }
         } catch (SQLException e) {
             throw new DatabaseConnectionException("Failed to retrieve animal with id " + id + ": " + e.getMessage(), e);

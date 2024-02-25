@@ -95,8 +95,6 @@ public class VisitorDAO {
                     .name(name)
                     .age(age)
                     .build();
-            } else {
-                throw new RecordNotFoundException("Visitor with id " + id + " not found");
             }
         } catch (SQLException e) {
             throw new DatabaseConnectionException("Failed to retrieve visitor from the database: " + e.getMessage(), e);
