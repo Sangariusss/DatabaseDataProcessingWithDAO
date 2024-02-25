@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.UUID;
+import main.java.com.sangarius.dataprocessingwithdao.dao.DAOFactory;
 import main.java.com.sangarius.dataprocessingwithdao.dao.VisitorDAO;
 import main.java.com.sangarius.dataprocessingwithdao.model.Visitor;
 import org.junit.Before;
@@ -15,8 +16,8 @@ public class VisitorDAOTest {
 
     @Before
     public void setUp() {
-        // Initialize the VisitorDAO object before each test
-        visitorDAO = VisitorDAO.getInstance();
+        // Using DAOFactory to create VisitorDAO
+        visitorDAO = DAOFactory.getInstance().createVisitorDAO();
     }
 
     @Test

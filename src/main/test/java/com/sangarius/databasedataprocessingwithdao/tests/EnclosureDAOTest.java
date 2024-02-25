@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 import java.util.UUID;
+import main.java.com.sangarius.dataprocessingwithdao.dao.DAOFactory;
 import main.java.com.sangarius.dataprocessingwithdao.dao.EnclosureDAO;
 import main.java.com.sangarius.dataprocessingwithdao.model.Enclosure;
 import org.junit.Before;
@@ -18,7 +19,8 @@ public class EnclosureDAOTest {
 
     @Before
     public void setUp() {
-        enclosureDAO = EnclosureDAO.getInstance();
+        // Using DAOFactory to create EnclosureDAO
+        enclosureDAO = DAOFactory.getInstance().createEnclosureDAO();
     }
 
     @Test

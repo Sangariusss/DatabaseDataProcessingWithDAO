@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.UUID;
+import main.java.com.sangarius.dataprocessingwithdao.dao.DAOFactory;
 import main.java.com.sangarius.dataprocessingwithdao.dao.EmployeeDAO;
 import main.java.com.sangarius.dataprocessingwithdao.model.Employee;
 import org.junit.After;
@@ -16,12 +17,8 @@ public class EmployeeDAOTest {
 
     @Before
     public void setUp() {
-       employeeDAO = EmployeeDAO.getInstance();
-    }
-
-    @After
-    public void tearDown() {
-        // Optionally clean up any database changes made during tests
+        // Using DAOFactory to create EmployeeDAO
+        employeeDAO = DAOFactory.getInstance().createEmployeeDAO();
     }
 
     @Test

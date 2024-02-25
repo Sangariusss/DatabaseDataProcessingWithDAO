@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import java.util.List;
 import java.util.UUID;
 import main.java.com.sangarius.dataprocessingwithdao.dao.AnimalDAO;
+import main.java.com.sangarius.dataprocessingwithdao.dao.DAOFactory;
 import main.java.com.sangarius.dataprocessingwithdao.model.Animal;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +18,8 @@ public class AnimalDAOTest {
 
     @Before
     public void setUp() {
-        // Initialize the AnimalDAO object before each test
-        animalDAO = AnimalDAO.getInstance();
+        // Using DAOFactory to create AnimalDAO
+        animalDAO = DAOFactory.getInstance().createAnimalDAO();
     }
 
     @Test

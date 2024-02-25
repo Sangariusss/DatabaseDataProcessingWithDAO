@@ -3,6 +3,7 @@ package main.java.com.sangarius.dataprocessingwithdao.service;
 import java.util.List;
 import java.util.UUID;
 import main.java.com.sangarius.dataprocessingwithdao.dao.AnimalDAO;
+import main.java.com.sangarius.dataprocessingwithdao.dao.DAOFactory;
 import main.java.com.sangarius.dataprocessingwithdao.dao.EmployeeDAO;
 import main.java.com.sangarius.dataprocessingwithdao.dao.EnclosureDAO;
 import main.java.com.sangarius.dataprocessingwithdao.dao.VisitorDAO;
@@ -19,10 +20,11 @@ public class DatabaseService {
     private final VisitorDAO visitorDAO;
 
     public DatabaseService() {
-        this.animalDAO = AnimalDAO.getInstance();
-        this.employeeDAO = EmployeeDAO.getInstance();
-        this.enclosureDAO = EnclosureDAO.getInstance();
-        this.visitorDAO = VisitorDAO.getInstance();
+        DAOFactory factory = DAOFactory.getInstance();
+        this.animalDAO = factory.createAnimalDAO();
+        this.employeeDAO = factory.createEmployeeDAO();
+        this.enclosureDAO = factory.createEnclosureDAO();
+        this.visitorDAO = factory.createVisitorDAO();
     }
 
     // Animal CRUD operations
